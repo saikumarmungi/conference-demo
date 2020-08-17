@@ -45,4 +45,12 @@ public class SpeakersController {
         BeanUtils.copyProperties(speaker, existing_speaker, "speaker_id");
         return speakerRepository.saveAndFlush(existing_speaker);
     }
+
+    @PatchMapping
+    public Speaker patch(@PathVariable Long id, @RequestBody String speaker_bio){
+        Speaker existing_speaker = speakerRepository.getOne(id);
+        existing_speaker.setSpeaker_bio(speaker_bio);
+
+        return speakerRepository.saveAndFlush(existing_speaker);
+    }
 }

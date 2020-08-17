@@ -1,6 +1,7 @@
 package com.pluralsight.conferencedemo.controllers;
 
 import com.pluralsight.conferencedemo.models.Session;
+import com.pluralsight.conferencedemo.models.Speaker;
 import com.pluralsight.conferencedemo.repositories.SessionRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,13 @@ public class SessionsController {
         Session existingSession = sessionRepository.getOne(id);
         BeanUtils.copyProperties(session, existingSession, "session_id");
         return sessionRepository.saveAndFlush(existingSession);
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.PATCH)
+    public Session patch(@PathVariable Long id, @RequestBody String session_description){
+        Session existing_session = sessionRepository.getOne(id);
+        existing_session.setSession_description(session_description);
+
+        return sessionRepository.saveAndFlush(existing_session);
     }
 }
